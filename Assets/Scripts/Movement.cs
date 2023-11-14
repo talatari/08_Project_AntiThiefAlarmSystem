@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private float _horizontalMove;
 
-    private void Start() => _rigidbody2D = GetComponent<Rigidbody2D>();
+    private void OnValidate() => _rigidbody2D ??= GetComponent<Rigidbody2D>();
 
     private void Update()
     {

@@ -7,6 +7,8 @@ public class Trigger : MonoBehaviour
     private Coroutine _coroutineAlarmOn;
     private Coroutine _coroutineAlarmOff;
 
+    private void OnValidate() => _alarmSystem ??= FindObjectOfType<AlarmSystem>();
+
     private void OnDisable()
     {
         if (_coroutineAlarmOn != null)
