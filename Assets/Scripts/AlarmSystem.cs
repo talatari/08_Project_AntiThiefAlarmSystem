@@ -6,8 +6,8 @@ public class AlarmSystem : MonoBehaviour
 {
     private AudioSource _audioSource;
     private int _speedVolume = 2;
-    
-    private void Start() => _audioSource = GetComponent<AudioSource>();
+
+    private void OnValidate() => _audioSource ??= GetComponent<AudioSource>();
 
     public IEnumerator AlarmOn()
     {
