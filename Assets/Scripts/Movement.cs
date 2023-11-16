@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(
+    typeof(Rigidbody2D))]
+
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speed = 5.0f;
@@ -8,7 +10,8 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private float _horizontalMove;
 
-    private void OnValidate() => _rigidbody2D ??= GetComponent<Rigidbody2D>();
+    private void Awake() => 
+        _rigidbody2D = GetComponent<Rigidbody2D>();
 
     private void Update()
     {

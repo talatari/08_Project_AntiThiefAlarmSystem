@@ -1,13 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(
+    typeof(AudioSource))]
+
 public class AlarmSystem : MonoBehaviour
 {
     private AudioSource _audioSource;
     private int _speedVolume = 2;
 
-    private void OnValidate() => _audioSource ??= GetComponent<AudioSource>();
+    private void Awake() => 
+        _audioSource = GetComponent<AudioSource>();
 
     public IEnumerator AlarmOn()
     {
