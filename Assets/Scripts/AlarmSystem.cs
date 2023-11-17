@@ -8,32 +8,53 @@ public class AlarmSystem : MonoBehaviour
 {
     private AudioSource _audioSource;
     private int _speedVolume = 2;
+    private Coroutine _coroutineAlarm;
+    private int _on = 1;
+    private int _off = -1;
 
     private void Awake() => 
         _audioSource = GetComponent<AudioSource>();
 
-    public IEnumerator AlarmOn()
+    private void OnDisable()
     {
-        _audioSource.Play();
-        
-        while (_audioSource.volume < 1)
-        {
-            _audioSource.volume += Time.deltaTime / _speedVolume;
+        if (_coroutineAlarm is not null)
+            StopCoroutine(_coroutineAlarm);
+    }
+
+    public void AlarmOn()
+    {
+        if (_coroutineAlarm is not null)
+            StopCoroutine(_coroutineAlarm);
             
-            yield return null;
-        }
+        _coroutineAlarm = StartCoroutine(Alarm(_on));
+    }
+
+    public void AlarmOff()
+    {
+        if (_coroutineAlarm is not null)
+            StopCoroutine(_coroutineAlarm);
+            
+        _coroutineAlarm = StartCoroutine(Alarm(_off));
     }
     
-    public IEnumerator AlarmOff()
+    private IEnumerator Alarm(int direction)
     {
-        while (_audioSource.volume > 0)
+        if (_audioSource.isPlaying is false)
+            _audioSource.Play();
+        
+        while (direction == _on)
         {
-            _audioSource.volume -= Time.deltaTime / _speedVolume;
+            _audioSource.volume += Time.deltaTime  / _speedVolume;
             
             yield return null;
         }
         
-        _audioSource.Stop();
+        while (direction == _off)
+        {
+            _audioSource.volume -= Time.deltaTime  / _speedVolume;
+            
+            yield return null;
+        }
     }
     
     
