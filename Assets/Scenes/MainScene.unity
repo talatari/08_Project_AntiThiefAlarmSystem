@@ -806,6 +806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03383330c91794b0c958f8d8b4213de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thiefDetector: {fileID: 1939646848}
 --- !u!1 &1939646845
 GameObject:
   m_ObjectHideFlags: 0
