@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class AlarmSystem : MonoBehaviour
 {
+    [SerializeField] private ThiefDetector _thiefDetector;
+    
     private AudioSource _audioSource;
     private int _speedVolume = 2;
     private Coroutine _coroutineAlarm;
@@ -15,47 +17,46 @@ public class AlarmSystem : MonoBehaviour
     private void Awake() => 
         _audioSource = GetComponent<AudioSource>();
 
+    private void OnEnable()
+    {
+        _thiefDetector.ThiefEnter += Alarm;
+        _thiefDetector.ThiefExit += Alarm;
+    }
+
     private void OnDisable()
     {
         if (_coroutineAlarm is not null)
             StopCoroutine(_coroutineAlarm);
+        
+        _thiefDetector.ThiefEnter -= Alarm;
+        _thiefDetector.ThiefExit -= Alarm;
     }
 
-    public void AlarmOn()
+    private void Alarm(int volumeDirection)
     {
         if (_coroutineAlarm is not null)
             StopCoroutine(_coroutineAlarm);
-            
-        _coroutineAlarm = StartCoroutine(Alarm(_on));
-    }
 
-    public void AlarmOff()
-    {
-        if (_coroutineAlarm is not null)
-            StopCoroutine(_coroutineAlarm);
-            
-        _coroutineAlarm = StartCoroutine(Alarm(_off));
+        _coroutineAlarm = StartCoroutine(OnAlarm(volumeDirection));
     }
     
-    private IEnumerator Alarm(int direction)
+    private IEnumerator OnAlarm(int volumeDirection)
     {
         if (_audioSource.isPlaying is false)
             _audioSource.Play();
         
-        while (direction == _on)
+        while (volumeDirection == _on)
         {
             _audioSource.volume += Time.deltaTime  / _speedVolume;
             
             yield return null;
         }
         
-        while (direction == _off)
+        while (volumeDirection == _off)
         {
             _audioSource.volume -= Time.deltaTime  / _speedVolume;
             
             yield return null;
         }
     }
-    
-    
 }
