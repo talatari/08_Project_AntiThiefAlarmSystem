@@ -3,23 +3,25 @@ using UnityEngine;
 
 public class ThiefDetector : MonoBehaviour
 {
-    [SerializeField] private AlarmSystem _alarmSystem;
+    [SerializeField] private VolumeControl _volumeControl;
 
+    private int _directionVolume = -1;
+    
     public event Action<int> ThiefEnter;
     public event Action<int> ThiefExit;
     
     private void Awake() => 
-        _alarmSystem = FindObjectOfType<AlarmSystem>();
+        _volumeControl = FindObjectOfType<VolumeControl>();
 
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (collider2D.TryGetComponent(out Thief thief)) 
-            ThiefEnter?.Invoke(1);
+            ThiefEnter?.Invoke(_directionVolume * _directionVolume);
     }
 
     private void OnTriggerExit2D(Collider2D collider2D)
     {
         if (collider2D.TryGetComponent(out Thief thief)) 
-            ThiefExit?.Invoke(-1);
+            ThiefExit?.Invoke(_directionVolume);
     }
 }
