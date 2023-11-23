@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 
-public class VolumeControl : MonoBehaviour
+public class AlarmVolume : MonoBehaviour
 {
     [SerializeField] private ThiefDetector _thiefDetector;
     
