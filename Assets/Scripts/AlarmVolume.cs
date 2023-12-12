@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-
 public class AlarmVolume : MonoBehaviour
 {
     [SerializeField] private ThiefDetector _thiefDetector;
@@ -11,7 +10,8 @@ public class AlarmVolume : MonoBehaviour
     private int _speedVolume = 2;
     private Coroutine _coroutineAlarm;
     
-    private void Awake() => _audioSource ??= GetComponent<AudioSource>();
+    private void Awake() => 
+        _audioSource = GetComponent<AudioSource>();
 
     private void OnEnable()
     {
