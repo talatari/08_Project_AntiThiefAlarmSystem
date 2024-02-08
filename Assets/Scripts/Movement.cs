@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     private const string Horizontal = "Horizontal";
     
-    [SerializeField] private float _speed = 5.0f;
+    [SerializeField] private float _speed = 5f;
     
     private Rigidbody2D _rigidbody2D;
     private float _horizontalMove;
