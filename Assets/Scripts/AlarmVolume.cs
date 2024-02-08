@@ -21,7 +21,7 @@ public class AlarmVolume : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_coroutineAlarm is not null)
+        if (_coroutineAlarm != null)
             StopCoroutine(_coroutineAlarm);
         
         _thiefDetector.ThiefEnter -= OnAlarm;
@@ -30,7 +30,7 @@ public class AlarmVolume : MonoBehaviour
 
     private void OnAlarm(int volumeDirection)
     {
-        if (_coroutineAlarm is not null)
+        if (_coroutineAlarm != null)
             StopCoroutine(_coroutineAlarm);
 
         _coroutineAlarm = StartCoroutine(Alarm(volumeDirection));
@@ -38,7 +38,7 @@ public class AlarmVolume : MonoBehaviour
     
     private IEnumerator Alarm(int volumeDirection)
     {
-        if (_audioSource.isPlaying is false)
+        if (_audioSource.isPlaying == false)
             _audioSource.Play();
         
         while (true)
